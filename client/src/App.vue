@@ -1,20 +1,43 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import Main from './components/Main.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/main">Main</RouterLink>
-      </nav>
+    <div class="banner">
+    Free shipping on all orders over $25.00 USD!
+    </div>
+    <div class="navbar">
+    <img alt="3derox-logo" class="logo" src="/logo.png" height="128" width="167"/>
+    <nav class="nav-links">
+    <div class="links">
+      <RouterLink to="/">Home</RouterLink>
+    </div>
+    <div class="links">
+      <RouterLink to="/about">About</RouterLink>
+    </div>
+    <div class="links">
+      <RouterLink to="/main">Projects</RouterLink>
+    </div>
+    <div class="links">
+      <RouterLink to="/main">Parts</RouterLink>
+    </div>
+    <div class="links">
+      <RouterLink to="/main">Design Services</RouterLink>
+    </div>
+    </nav>
+    <signin class="signin-links">
+    <div class="links">
+    Register
+    </div>
+    <div class="links">
+    Sign In
+    </div>
+    </signin>
+    </div>
+    <div class="two">
+    <Main />
     </div>
   </header>
 
@@ -22,65 +45,36 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.banner {
+  font-family: mokoto;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #009dc4;
+  height: 30px;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFFFFF;
+  height: 150px;
 }
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+.nav-links {
+  font-family: mokoto;
+  font-size: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.signin-links {
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.links {
+  margin: 20px;
 }
 </style>
