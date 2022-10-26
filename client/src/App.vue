@@ -18,7 +18,7 @@ import Main from './components/Main.vue'
       <RouterLink to="/about">About</RouterLink>
     </div>
     <div class="links">
-      <RouterLink to="/main">Projects</RouterLink>
+      <RouterLink to="/projects">Projects</RouterLink>
     </div>
     <div class="links">
       <RouterLink to="/main">Parts</RouterLink>
@@ -42,6 +42,9 @@ import Main from './components/Main.vue'
   </header>
 
   <RouterView />
+  <div class="footer">
+  <p>All Rights Reserved.  © 3DeRox, LLC 2022 | <a href="https://www.3derox.com">www.3derox.com</a></p>
+  </div>
 </template>
 
 <style scoped>
@@ -76,5 +79,14 @@ import Main from './components/Main.vue'
 }
 .links {
   margin: 20px;
+}
+.footer {
+  margin-top: 20px;
+  display: flex;
+  margin-left: auto;
+  font-size: 15px;
+  color: #A6A6A6;
+  margin-right: auto;
+  justify-content: center;
 }
 </style>

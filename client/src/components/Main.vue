@@ -2,12 +2,7 @@
   <div class="main">
   
   </div>
-  <div class="gallery">
-    <img class="image" id="image" src="/eye-catch.png">
-    <div class="text">
-      <p>Seriously.  We sell 3D Printed Parts.  We can also do custom designs.  Give money, plz.</p>
-    </div>
-  </div>
+
 
 </template>
 
@@ -19,74 +14,46 @@
   align-items: center;
   background-color: #FFFFFF;
 }
-.gallery {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.image {
-  animation: fadeIn ease 2s;
-  -webkit-animation: fadeIn ease 2s;
-  -moz-animation: fadeIn ease 2s;
-  -o-animation: fadeIn ease 2s;
-  -ms-animation: fadeIn ease 2s;
-}
-@keyframes fadeIn {
-  0% {
-    opacity:0;
-  }
-  100% {
-    opacity:1;
-  }
-}
-@-moz-keyframes fadeIn {
-  0% {
-    opacity:0;
-  }
-  100% {
-    opacity:1;
-  }
-}
-@-webkit-keyframes fadeIn {
-  0% {
-    opacity:0;
-  }
-  100% {
-    opacity:1;
-  }
-}
-@-o-keyframes fadeIn {
-  0% {
-    opacity:0;
-  }
-  100% {
-    opacity:1;
-  }
-}
-@-ms-keyframes fadeIn {
-  0% {
-    opacity:0;
-  }
-  100% {
-    opacity:1;
-  }
-}
 </style>
 
 <script setup>
   import { onMounted } from 'vue'
   let images = [
     {
-      src: "/favicon.ico",
-      alt: "",
+      src: "/installed-upstop.jpg",
+      alt: "Front Up Stop, installed."
     },
     {
-      src: "/logo.png",
-      alt: ""
+      src: "/air-deflector.jpg",
+      alt: "Air Deflector, installed."
     },
     {
-      src: "/eye-catch.png",
-      alt: ""
+      src: "/hatch-guides.jpg",
+      alt: "Hatch Guides, installed."
+    },
+    {
+      src: "/hatch-spacer.jpg",
+      alt: "Hatch Spacer, installed."
+    },
+    {
+      src: "/handle-insert.jpg",
+      alt: "Handle Insert, installed."
+    },
+    {
+      src: "/blender-light.JPG",
+      alt: "Custom Third Brake Light."
+    },
+    {
+      src: "/bobcat3.JPG",
+      alt: "Miller Bobcat Welder."
+    },
+    {
+      src: "/bobcat1.JPG",
+      alt: "Custom 3D Model of Bobcat Welder."
+    },
+    {
+      src: "/printer-arrangement.JPG",
+      alt: "Full door plastic kit arranged for printing."
     }
   ]
   let imageIndex = 0
