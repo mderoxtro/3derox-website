@@ -1,6 +1,5 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import Main from './components/Main.vue'
 </script>
 
 <template>
@@ -37,7 +36,6 @@ import Main from './components/Main.vue'
     </signin>
     </div>
     <div class="two">
-    <Main />
     </div>
   </header>
 

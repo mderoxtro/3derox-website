@@ -1,7 +1,8 @@
 <template>
 <div class="parts">
   <h1>Parts</h1>
-  <p>Parts Go Here</p>
+    <div>{{ state }}</div>
+    <p>Parts Go Here</p>
 </div>
 </template>
 
@@ -20,3 +21,19 @@
     justify-content: center;
   }
 </style>
+
+<script>
+  import { ref } from 'vue'
+  
+  export default {
+    setup() {
+      const state = ref({})
+      
+      fetch('http://localhost:3000/allParts')
+        .then(response => response.json())
+        .then(data => state.value = data)
+      
+      return { state }
+    }
+  }
+</script>
