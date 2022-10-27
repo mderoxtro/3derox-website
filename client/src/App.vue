@@ -21,7 +21,7 @@ import Main from './components/Main.vue'
       <RouterLink to="/projects">Projects</RouterLink>
     </div>
     <div class="links">
-      <RouterLink to="/main">Parts</RouterLink>
+      <RouterLink to="/parts">Parts</RouterLink>
     </div>
     <div class="links">
       <RouterLink to="/main">Design Services</RouterLink>

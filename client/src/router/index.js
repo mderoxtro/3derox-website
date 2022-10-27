@@ -26,6 +26,56 @@ const router = createRouter({
       path: '/projects',
       name: 'projects',
       component: () => import('../views/ProjectView.vue')
+    },
+    {
+      path: '/projects/88',
+      name: '88transam',
+      component: () => import('../views/projects/88View.vue')
+    },
+    {
+      path: '/projects/89',
+      name: '89transam',
+      component: () => import('../views/projects/89View.vue')
+    },
+    {
+      path: '/projects/screw',
+      name: 'screwcovers',
+      component: () => import('../views/projects/ScrewView.vue')
+    },
+    {
+      path: '/projects/welder',
+      name: 'millerwelder',
+      component: () => import('../views/projects/WelderView.vue')
+    },
+    {
+      path: '/projects/vibrate',
+      name: 'vibdamp',
+      component: () => import('../views/projects/VibrateView.vue')
+    },
+    {
+      path: '/projects/bobber',
+      name: 'fishbob',
+      component: () => import('../views/projects/BobberView.vue')
+    },
+    {
+      path: '/projects/32',
+      name: '32ford',
+      component: () => import('../views/projects/32View.vue')
+    },
+    {
+      path: '/projects/grout',
+      name: 'groutswivel',
+      component: () => import('../views/projects/GroutView.vue')
+    },
+    {
+      path: '/projects/eevee',
+      name: 'eevee',
+      component: () => import('../views/projects/EeveeView.vue')
+    },
+    {
+      path: '/parts',
+      name: 'parts',
+      component: () => import('../views/PartsView.vue')
     }
   ]
 })
