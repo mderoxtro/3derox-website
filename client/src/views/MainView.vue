@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import Main from '../components/Main.vue'
 </script>
 

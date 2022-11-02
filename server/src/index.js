@@ -36,6 +36,7 @@ let buildParts = async () => {
         deroxNum: part.deroxNum,
         manNum: part.manNum,
         description: part.description,
+        blurb: part.blurb,
         material: part.material,
         colors: part.colors,
         makes: part.makes,
@@ -43,6 +44,7 @@ let buildParts = async () => {
         years: part.years,
         reqQty: part.reqQty,
         price: part.price,
+        stock: part.inStock,
         storeFronts: part.storeFronts,
         addFiles: part.addFiles
       })

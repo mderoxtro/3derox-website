@@ -2,21 +2,13 @@
 <div class="parts">
   <h1>Parts</h1>
     <div class="container">
-    <div v-for="item in state" class="partbox" part="item">
+    <div v-for="item in store.allParts" class="partbox" part="item">
     <p>PHOTO</p>
     <p>3DeRox #: {{ item.deroxNum }}</p>
     <p>Manufacturer #: {{ item.manNum }}</p>
     <p>Description: {{ item.description }}</p>
-    <p>Materials: <li v-for="mat in item.material">{{ mat }}</li></p>
-    <p>Colors: <li v-for="col in item.colors">{{ col }}</li></p>
-    <p>Makes: <li v-for="mak in item.makes">{{ mak }}</li></p>
-    <p>Models: <li v-for="mod in item.models">{{ mod }}</li></p>
-    <p>Years: <li v-for="yea in item.years">{{ yea }}</li></p>
-    <p>Required Quantity: {{ item.reqQty }}</p>
-    <p>Price: $ {{ item.price }}</p>
-    <p>Storefronts: <li v-for="store in item.storefronts">{{ store }}</li></p>
-    <p>Additional Files: {{ item.addFiles }}</p>
-    <button @click='viewPart()'>View Part Details</button>
+    <p>Price: {{ formatPrice(item.price) }}</p>
+    <router-link :to="{ name: 'part_detail' }" tag="button" @click=store.setPart(item)>View More Details</router-link>
     </div>
     </div>
 </div>
@@ -51,25 +43,26 @@
 </style>
 
 <script>
-  import { ref } from 'vue'
-  
-  export default {
-    props: {
-      part: Object
-    },
-    methods: {
-      viewPart() {
-        this.$emit('passPart')
-      }
-    },
-    setup() {
-      const state = ref({})
-      
-      fetch('http://localhost:3000/allParts')
-        .then(response => response.json())
-        .then(data => state.value = data)
-      
-      return { state }
+import { usePartStore } from '@/stores/partsStore.js'
+
+export default {
+  setup() {
+    const store = usePartStore()
+    
+    return {
+      store
+    }
+  },
+  methods: {
+    formatPrice(value) {
+      let formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2
+      })
+      return formatter.format(value)
     }
   }
+}
+
 </script>

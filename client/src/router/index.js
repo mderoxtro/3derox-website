@@ -76,6 +76,12 @@ const router = createRouter({
       path: '/parts',
       name: 'parts',
       component: () => import('../views/PartsView.vue')
+    },
+    {
+      path: '/partDetail',
+      name: 'part_detail',
+      component: () => import('../views/DetailView.vue'),
+      props: true,
     }
   ]
 })
