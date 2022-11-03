@@ -1,15 +1,27 @@
 const express = require('express')
 const path = require('path')
+const bodyParser = require('body-parser')
+const fs = require('fs')
 const app = express()
 const cors = require('cors')
 const statParts = require('./parts/staticData.js')
 const mongoose = require('mongoose')
 const Parts = require('./models/parts.js')
 
+const PRODUCT_DATA_FILE = path.join(__dirname, 'server-product-data.json')
+const CART_DATA_FILE = path.join(__dirname, 'server-cart-data.json')
+
 mongoose.connect("mongodb://127.0.0.1:27017/3derox-db")
 
-app.use(express.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
+  res.setHeader('Pragma', 'no-cache')
+  res.setHeader('Expires', '0')
+  next()
+})
 
 const port = process.env.PORT || 3000
 
@@ -25,6 +37,31 @@ app.get("/", (req, res) => {
 app.get("/allParts", async (req, res) => {
   let allParts = await Parts.find({});
   res.send(allParts)
+})
+
+app.post('/cart', (req, res) => {
+  fs.readFile(CART_DATA_FILE, (err, data) => {
+    const cartProducts = JSON.parse(data)
+    const newCartProduct = {
+      num: req.body.deroxNum,
+      desc: req.body.description,
+      price: req.body.price,
+      imageUrl: req.body.imageUrl,
+      quantity: 1
+    }
+    let cartProductExists = false
+    cartProducts.map((cartProduct) => {
+      if(cartProduct.num === newCartProduct.num){
+        cartProduct.quantity++
+        cartProductExists = true
+      }
+    })
+    if(!cartProductExists) cartProducts.push(newCartProduct)
+    fs.writeFile(CART_DATA_FILE, JSON.stringify(cartProducts, null, 4), () => {
+      res.setHeader('Cache-Control', 'no-cache')
+      res.json(cartProducts)
+    })
+  })
 })
 
 let buildParts = async () => {
@@ -44,7 +81,7 @@ let buildParts = async () => {
         years: part.years,
         reqQty: part.reqQty,
         price: part.price,
-        stock: part.inStock,
+        inStock: part.inStock,
         storeFronts: part.storeFronts,
         addFiles: part.addFiles
       })

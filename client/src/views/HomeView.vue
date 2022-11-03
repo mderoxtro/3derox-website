@@ -30,6 +30,7 @@ import Main from '../components/Main.vue'
   -moz-animation: fadeIn ease 2s;
   -o-animation: fadeIn ease 2s;
   -ms-animation: fadeIn ease 2s;
+  border-radius: 8px;
 }
 .text {
   display: flex;

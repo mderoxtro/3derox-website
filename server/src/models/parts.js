@@ -19,6 +19,10 @@ const partsSchema = new mongoose.Schema({
     type: String,
     default: "An unknown part."
   },
+  blurb: {
+    type: String,
+    default: "An unknown part."
+  },
   material: {
     type: Array,
     default: ["ABS Plastic"]
@@ -47,11 +51,19 @@ const partsSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  inStock: {
+    type: Number,
+    default: 0
+  },
   storefronts: {
     type: Array,
     default: [ "eBay", "Etsy", "Amazon", "Facebook"]
   },
   addFiles: {
+    type: Array,
+    default: ["None"]
+  },
+  condFlags: {
     type: Array,
     default: ["None"]
   }
