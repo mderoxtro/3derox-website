@@ -23,7 +23,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <RouterLink to="/parts">Parts</RouterLink>
     </div>
     <div class="links">
-      <RouterLink to="/main">Design Services</RouterLink>
+      <RouterLink to="/design">Design Services</RouterLink>
     </div>
     </nav>
     <signin class="signin-links">
