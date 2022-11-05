@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
+const https = require("https")
 const fs = require('fs')
 const app = express()
 const cors = require('cors')
@@ -25,7 +26,11 @@ app.use((req, res, next) => {
 
 const port = process.env.PORT || 3000
 
-app.listen(port, () => {
+https.createServer({
+  key: fs.readFileSync("/etc/letsencrypt/live/3derox.com/privkey.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/live/3derox.com/cert.pem"),
+  ca: fs.readFileSync("/etc/letsencrypt/live/3derox.com/chain.pem")
+}, app).listen(port, () => {
   console.log(`Running on ${port}`)
   buildParts()
 })
