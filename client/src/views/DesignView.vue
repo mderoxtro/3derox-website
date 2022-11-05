@@ -10,7 +10,7 @@
 
 <style>
   .design {
-    min-height: 100vh;
+    min-height: 50vh;
     display: flex;
     margin-left: auto;
     margin-right: auto;

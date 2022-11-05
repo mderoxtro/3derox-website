@@ -2,7 +2,7 @@
 <div class="project">
   <h1>Not A Pokemon</h1>
   <p>David, a coworker of Matt's, requested a 3D Printed statue of Eevee, as large as one could be made.  A 3D Model was found, lightly edited to include a face, and successfully printed ~10" tall in PLA material.</p>
-  <p>For legal purposes, definitely not a Pokemon.</p>
+  <p>For legal purposes, definitely not a Pokemon.  Also, keychains.</p>
   <div class="galcont">
   <Splide style="width: 600px; height: 400px;">
     <SplideSlide v-for="image in images">
@@ -18,7 +18,7 @@
     border-radius: 8px;
   }
   .project {
-    min-height: 100vh;
+    min-height: 50vh;
     display: flex;
     margin-left: auto;
     margin-right: auto;
@@ -44,6 +44,8 @@ export default {
     return {
       images: [
         '/projEevee/001.jpg',
+        '/projEevee/002.jpg',
+        '/projEevee/003.jpg'
       ]
     }
   }
