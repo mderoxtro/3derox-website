@@ -11,7 +11,7 @@ export default defineConfig({
     target: 'esnext'
   },
   root: path.resolve(__dirname, "client"),
-  assetsInclude: ['**/*.JPG', '**/*.jpg', '**/*.png', '**/*.pdf'],
+  assetsInclude: ['**/*.JPG', '**/*.jpg', '**/*.png', '**/*.pdf', '**/*.ico', '**/*.otf', '**/*.ttf'],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('/src', import.meta.url))

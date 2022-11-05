@@ -7,7 +7,7 @@ let getAllParts = async () => {
     let parts = JSON.parse(allPartsStorage)
     return parts
   } else {
-    let parts = await fetch('http://3derox.com:3000/allParts')
+    let parts = await fetch('https://3derox.com:3000/allParts')
     return await parts.json();
   }
 }
