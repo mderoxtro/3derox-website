@@ -5,7 +5,7 @@ import Main from '../components/Main.vue'
 <template>
   <main>
   <div class="gallery">
-    <img class="image" id="image" src="/printer-arrangement.JPG" height="400" width="600">
+    <img class="image" id="image" src="/printerArrange.JPG" height="400" width="600">
     <div class="text">
     <b>
       <p>3D Printed Parts for Classic Cars</p>
@@ -40,7 +40,7 @@ import Main from '../components/Main.vue'
   width: 600px;
   height: 400px;
 }
-@keyframes fadeIn {
+keyframes fadeIn {
   0% {
     opacity:0;
   }
@@ -48,7 +48,7 @@ import Main from '../components/Main.vue'
     opacity:1;
   }
 }
-@-moz-keyframes fadeIn {
+-moz-keyframes fadeIn {
   0% {
     opacity:0;
   }
@@ -56,7 +56,7 @@ import Main from '../components/Main.vue'
     opacity:1;
   }
 }
-@-webkit-keyframes fadeIn {
+-webkit-keyframes fadeIn {
   0% {
     opacity:0;
   }
@@ -64,7 +64,7 @@ import Main from '../components/Main.vue'
     opacity:1;
   }
 }
-@-o-keyframes fadeIn {
+-o-keyframes fadeIn {
   0% {
     opacity:0;
   }
@@ -72,7 +72,7 @@ import Main from '../components/Main.vue'
     opacity:1;
   }
 }
-@-ms-keyframes fadeIn {
+-ms-keyframes fadeIn {
   0% {
     opacity:0;
   }
@@ -117,7 +117,7 @@ let images = [
     alt: "Custom 3D Model of Bobcat Welder."
   },
   {
-    src: "/printer-arrangement.JPG",
+    src: "/printerArrange.JPG",
     alt: "Full door plastic kit arranged for printing."
   }
 ]
@@ -126,7 +126,7 @@ let imageIndex = 0
 export default {
   data() {
     return {
-      interval: null
+      interval: null,
     }
   },
   mounted(){
