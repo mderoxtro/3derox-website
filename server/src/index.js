@@ -11,7 +11,7 @@ const Parts = require('./models/parts.js')
 const PRODUCT_DATA_FILE = path.join(__dirname, 'server-product-data.json')
 const CART_DATA_FILE = path.join(__dirname, 'server-cart-data.json')
 
-mongoose.connect("mongodb://127.0.0.1:27017/3derox-db")
+mongoose.connect("mongodb://3derox.com:27017/3derox-db")
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
