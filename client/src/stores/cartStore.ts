@@ -39,7 +39,11 @@ export const useCartStore = defineStore({
     total(): number {
       const products = useProductStore();
       return Object.keys(this.contents).reduce((acc, id) => {
-        return acc + products.items[id].price * this.contents[id].quantity;
+        let newId = id
+        if(id.length > 9){
+          newId = id.slice(0, 9)
+        }
+        return acc + products.items[newId].price * this.contents[id].quantity;
       }, 0);
     },
 
@@ -54,18 +58,14 @@ export const useCartStore = defineStore({
           custom = "Customized: " + purchase.newProdId
         }
 
-        let displayId = purchase.productId
-        if(purchase.newProdId){
-          displayId = purchase.newProdId
-        }
-
         return {
-          id: displayId,
+          id: purchase.productId,
           image: products.items[purchase.productId].photos[0].url,
           require: products.items[purchase.productId].reqQty,
           title: products.items[purchase.productId].description,
           quantity: purchase.quantity,
           custom,
+          customId: purchase.newProdId,
           indCost: products.items[purchase.productId].price,
           cost: purchase.quantity * products.items[purchase.productId].price,
         };
@@ -85,7 +85,6 @@ export const useCartStore = defineStore({
       }
     },
     addComplex(productId: string, colorSelect: string, designSelect: string, dimInput: string){
-      console.log(productId + colorSelect + designSelect + dimInput)
       let newProdId = productId
       if(colorSelect !== 'colorSelected'){
         newProdId += colorSelect
@@ -99,7 +98,13 @@ export const useCartStore = defineStore({
       console.log(newProdId)
       if(this.contents[productId]){
         if(this.contents[productId].newProdId == newProdId){
-          this.contents[productId].quantity += 1
+          this.contents[productId].quantity+= 1
+        } else {
+          this.contents[newProdId] = {
+            productId,
+            newProdId,
+            quantity: 1,
+          }
         }
       } else {
         this.contents[productId] = {
@@ -109,16 +114,22 @@ export const useCartStore = defineStore({
         }
       }
     },
-    remove(productId: string) {
-      if (!this.contents[productId]) {
-        return;
+    remove(productId: string, customId: string) {
+      if (!this.contents[productId] && !customId) {
+        return
       }
-
-      this.contents[productId].quantity -= 1;
+      if(this.contents[customId]){
+        this.contents[customId].quantity -= 1
+      } else if (this.contents[productId]){
+        this.contents[productId].quantity -= 1;
+      }
 
       if (this.contents[productId].quantity === 0) {
         delete this.contents[productId];
+      } else if (this.contents[customId].quantity === 0){
+        delete this.contents[customId]
       }
+
     },
     removeAll() {
       this.contents = {}

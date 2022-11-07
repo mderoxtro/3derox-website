@@ -12,6 +12,7 @@
         <div class="card-body">
             <h3 class="card-title">
                 <router-link class="link link-hover" :to="`/product/${cartProduct.id}`">{{ cartProduct.title }}</router-link>
+                <p>Debug: {{cartProduct.id}}</p>
             </h3>
             <p>{{cartProduct.custom}}</p>
             <p><span class="sectitle">Quantity Per Car:</span> {{ cartProduct.require }}</p>
@@ -19,7 +20,7 @@
             <div class="card-actions">
                 <div class="btn-group">
                 <span class="sectitle">Cart Quantity:</span> 
-                    <button class="btn btn-primary" @click="cartStore.remove(cartProduct.id)">-</button>
+                    <button class="btn btn-primary" @click="cartStore.remove(cartProduct.id, cartProduct.customId)">-</button>
                     <button class="btn btn-ghost no-animation">{{ cartProduct.quantity }}</button>
                     <button class="btn btn-primary" @click="cartStore.add(cartProduct.id)">+</button>
                 </div>
