@@ -8,7 +8,7 @@
     <p><span class="sectitle">Manufacturer #:</span> {{ item.manNum }}</p>
     <p><span class="sectitle">Description:</span> {{ item.description }}</p>
     <p><span class="sectitle">Price:</span> {{ formatPrice(item.price) }}</p>
-    <router-link :to="{ name: 'part_detail' }" tag="button" @click=store.setPart(item)>View More Details</router-link>
+    <router-link :to="`/product/${item.deroxNum}`" tag="button" @click=store.setPart(item)>View More Details</router-link>
     </div>
     </div>
 </div>
@@ -22,7 +22,7 @@
     border-radius: 8px;
   }
   .parts {
-    min-height: 100vh;
+    min-height: 50vh;
     display: flex;
     margin-left: auto;
     margin-right: auto;

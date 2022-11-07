@@ -9,10 +9,11 @@ const statParts = require('./parts/staticData.js')
 const mongoose = require('mongoose')
 const Parts = require('./models/parts.js')
 
-const PRODUCT_DATA_FILE = path.join(__dirname, 'server-product-data.json')
-const CART_DATA_FILE = path.join(__dirname, 'server-cart-data.json')
+// PRODUCTION CONNECT
+// mongoose.connect("mongodb://3derox.com:27017/3derox-db")
 
-mongoose.connect("mongodb://3derox.com:27017/3derox-db")
+// DEV CONNECT
+mongoose.connect("mongodb://localhost:27017/3derox-db")
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -26,12 +27,19 @@ app.use((req, res, next) => {
 
 const port = process.env.PORT || 3000
 
-https.createServer({
-  key: fs.readFileSync("/etc/letsencrypt/live/3derox.com/privkey.pem"),
-  cert: fs.readFileSync("/etc/letsencrypt/live/3derox.com/cert.pem"),
-  ca: fs.readFileSync("/etc/letsencrypt/live/3derox.com/chain.pem")
-}, app).listen(port, () => {
-  console.log(`Running on ${port}`)
+// PRODUCTION CODE
+// https.createServer({
+//   key: fs.readFileSync("/etc/letsencrypt/live/3derox.com/privkey.pem"),
+//   cert: fs.readFileSync("/etc/letsencrypt/live/3derox.com/cert.pem"),
+//   ca: fs.readFileSync("/etc/letsencrypt/live/3derox.com/chain.pem")
+// }, app).listen(port, () => {
+//   console.log(`Running on ${port}`)
+//   buildParts()
+// })
+
+// DEV CODE
+app.listen(port, () => {
+  console.log(`Running on port ${port}`)
   buildParts()
 })
 
@@ -42,31 +50,6 @@ app.get("/", (req, res) => {
 app.get("/allParts", async (req, res) => {
   let allParts = await Parts.find({});
   res.send(allParts)
-})
-
-app.post('/cart', (req, res) => {
-  fs.readFile(CART_DATA_FILE, (err, data) => {
-    const cartProducts = JSON.parse(data)
-    const newCartProduct = {
-      num: req.body.deroxNum,
-      desc: req.body.description,
-      price: req.body.price,
-      imageUrl: req.body.imageUrl,
-      quantity: 1
-    }
-    let cartProductExists = false
-    cartProducts.map((cartProduct) => {
-      if(cartProduct.num === newCartProduct.num){
-        cartProduct.quantity++
-        cartProductExists = true
-      }
-    })
-    if(!cartProductExists) cartProducts.push(newCartProduct)
-    fs.writeFile(CART_DATA_FILE, JSON.stringify(cartProducts, null, 4), () => {
-      res.setHeader('Cache-Control', 'no-cache')
-      res.json(cartProducts)
-    })
-  })
 })
 
 let buildParts = async () => {
@@ -88,7 +71,8 @@ let buildParts = async () => {
         price: part.price,
         inStock: part.inStock,
         storeFronts: part.storeFronts,
-        addFiles: part.addFiles
+        addFiles: part.addFiles,
+        condFlags: part.condFlags,
       })
       await newPart.save()
     } else {
