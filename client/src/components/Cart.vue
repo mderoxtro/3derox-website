@@ -12,17 +12,16 @@
         <div class="card-body">
             <h3 class="card-title">
                 <router-link class="link link-hover" :to="`/product/${cartProduct.id}`">{{ cartProduct.title }}</router-link>
-                <p>Debug: {{cartProduct.id}}</p>
             </h3>
-            <p>{{cartProduct.custom}}</p>
+            <p class="custom">{{cartProduct.custom}}</p>
             <p><span class="sectitle">Quantity Per Car:</span> {{ cartProduct.require }}</p>
             
             <div class="card-actions">
                 <div class="btn-group">
                 <span class="sectitle">Cart Quantity:</span> 
-                    <button class="btn btn-primary" @click="cartStore.remove(cartProduct.id, cartProduct.customId)">-</button>
-                    <button class="btn btn-ghost no-animation">{{ cartProduct.quantity }}</button>
-                    <button class="btn btn-primary" @click="cartStore.add(cartProduct.id)">+</button>
+                    <button class="fancyButton" @click="cartStore.remove(cartProduct.id, cartProduct.customId)">-</button>
+                    <span class="qtyBadge">{{ cartProduct.quantity }}</span>
+                    <button class="fancyButton" @click="cartStore.add(cartProduct.id, cartProduct.customId)">+</button>
                 </div>
             </div>
             <p><span class="sectitle">Price Each:</span> {{ toCurrency(cartProduct.indCost) }}</p>
@@ -32,6 +31,9 @@
 </template>
 
 <style scoped>
+.custom {
+  font-size: 10px;
+}
 .fancypic {
   border-radius: 8px;
 }
@@ -40,6 +42,58 @@
 }
 .sectitle {
   font-weight: bold;
+}
+.qtyBadge {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #1A1A1A;
+  border-radius: 8px;
+  width: 30px;
+  padding: 6px;
+  text-align: center;
+  background-color: #009dc4;
+  border: 2px;
+}
+.fancyButton {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 20px;
+  min-width: 0;
+  outline: none;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+.fancyButton:disabled {
+  pointer-events: none;
+}
+
+.fancyButton:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.fancyButton:active {
+  box-shadow: none;
+  transform: translateY(0);
 }
 </style>
 

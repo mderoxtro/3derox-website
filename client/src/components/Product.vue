@@ -26,17 +26,18 @@
     <p><span class="sectitle">Supported Years:</span><ul> <li v-for="yea in product.years" class="horilist">{{ yea }}</li> </ul></p>
     <p><span class="sectitle">Additional Files:</span> <ul> <li v-for="file in product.addFiles"><a :href=file.url target="_blank">{{ file.desc }}</a></li></ul></p>
     <div v-if="product.condFlags[0] !== 'None'">
+      <h3>Customization Options</h3>
       <div v-for="cond in product.condFlags">
-      <p v-if="cond === 'Color'">Select Color <select v-model="colorSelected"><option v-for="col in product.colors" :value="col">{{col}}</option></select></p>
-      <p v-if="cond === 'Design'">Select Design <select v-model="designSelected"><option v-for="mod in product.models" :value="mod">{{mod}}</option></select></p>
-      <p v-if="cond === 'Dimension'">Enter Required Dimension <input v-model="dimension" placeholder="specify mm or inch" @change="inputDim"></p>
+      <p v-if="cond === 'Color'"><span class="sectitle">Select Color</span> <select v-model="colorSelected"><option v-for="col in product.colors" :value="col">{{col}}</option></select></p>
+      <p v-if="cond === 'Design'"><span class="sectitle">Select Design</span> <select v-model="designSelected"><option v-for="mod in product.models" :value="mod">{{mod}}</option></select></p>
+      <p v-if="cond === 'Dimension'"><span class="sectitle">Enter Required Dimension</span> <input v-model="dimension" placeholder="specify mm or inch" @change="inputDim"></p>
       </div>
-      <button class="btn btn-primary" @click="cartStore.addComplex(product.deroxNum, colorSelected, designSelected, dimension)">
+      <button class="fancyButton" @click="cartStore.addComplex(product.deroxNum, colorSelected, designSelected, dimension)">
         Add to Cart
       </button>
     </div>
     <div v-else>
-    <button class="btn btn-primary" @click="cartStore.add(product.deroxNum)">
+    <button class="fancyButton" @click="cartStore.add(product.deroxNum)">
       Add to Cart
     </button>
     </div>
@@ -94,6 +95,49 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
+.fancyButton {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+}
+
+.fancyButton:disabled {
+  pointer-events: none;
+}
+
+.fancyButton:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.fancyButton:active {
+  box-shadow: none;
+  transform: translateY(0);
 }
 </style>
 

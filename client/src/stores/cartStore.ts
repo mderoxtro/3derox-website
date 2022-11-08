@@ -41,7 +41,13 @@ export const useCartStore = defineStore({
       return Object.keys(this.contents).reduce((acc, id) => {
         let newId = id
         if(id.length > 9){
-          newId = id.slice(0, 9)
+          if(id.slice(0, 7) == '3DMDKIT'){
+            newId = id.slice(0,10)
+            console.log(newId)
+          } else {
+            newId = id.slice(0, 9)
+            console.log(newId)
+          }
         }
         return acc + products.items[newId].price * this.contents[id].quantity;
       }, 0);
@@ -74,12 +80,15 @@ export const useCartStore = defineStore({
   },
 
   actions: {
-    add(productId: string) {
-      if (this.contents[productId]) {
+    add(productId: string, customId: string) {
+      if (this.contents[productId] && !customId) {
         this.contents[productId].quantity += 1;
+      } else if (this.contents[customId]){
+        this.contents[customId].quantity += 1;
       } else {
         this.contents[productId] = {
           productId,
+          newProdId: customId,
           quantity: 1,
         };
       }
@@ -95,22 +104,13 @@ export const useCartStore = defineStore({
       if(dimInput){
         newProdId += "Dim" + dimInput
       }
-      console.log(newProdId)
-      if(this.contents[productId]){
-        if(this.contents[productId].newProdId == newProdId){
-          this.contents[productId].quantity+= 1
-        } else {
-          this.contents[newProdId] = {
-            productId,
-            newProdId,
-            quantity: 1,
-          }
-        }
+      if(this.contents[newProdId]){
+        this.contents[newProdId].quantity += 1
       } else {
-        this.contents[productId] = {
+        this.contents[newProdId] = {
           productId,
           newProdId,
-          quantity: 1,
+          quantity: 1
         }
       }
     },
@@ -120,16 +120,15 @@ export const useCartStore = defineStore({
       }
       if(this.contents[customId]){
         this.contents[customId].quantity -= 1
+        if(this.contents[customId].quantity <= 0){
+          delete this.contents[customId]
+        }
       } else if (this.contents[productId]){
         this.contents[productId].quantity -= 1;
+        if(this.contents[productId].quantity <= 0){
+          delete this.contents[productId]
+        }
       }
-
-      if (this.contents[productId].quantity === 0) {
-        delete this.contents[productId];
-      } else if (this.contents[customId].quantity === 0){
-        delete this.contents[customId]
-      }
-
     },
     removeAll() {
       this.contents = {}
