@@ -3,11 +3,14 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const https = require("https")
 const fs = require('fs')
+const qs = require('qs')
 const app = express()
 const cors = require('cors')
+const axios = require('axios')
 const statParts = require('./parts/staticData.js')
 const mongoose = require('mongoose')
 const Parts = require('./models/parts.js')
+const authCred = require('./paypal/auth.js')
 
 // PRODUCTION CONNECT
 // mongoose.connect("mongodb://3derox.com:27017/3derox-db")
@@ -27,6 +30,8 @@ app.use((req, res, next) => {
 
 const port = process.env.PORT || 3000
 
+let paypalToken = ''
+
 // PRODUCTION CODE
 // https.createServer({
 //   key: fs.readFileSync("/etc/letsencrypt/live/3derox.com/privkey.pem"),
@@ -38,9 +43,10 @@ const port = process.env.PORT || 3000
 // })
 
 // DEV CODE
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Running on port ${port}`)
   buildParts()
+  setInterval(() => tokenHandler(), 300000)
 })
 
 app.get("/", (req, res) => {
@@ -51,6 +57,32 @@ app.get("/allParts", async (req, res) => {
   let allParts = await Parts.find({});
   res.send(allParts)
 })
+
+let tokenHandler = async () => {
+  console.log("Handling Token")
+  let currentToken = await authPaypal().then((response) => {
+    paypalToken = response.data.access_token
+  })
+}
+
+let authPaypal = async () => {
+  try {
+    let token = await axios.post(authCred.sandboxCredentials.url, {
+      grant_type:"client_credentials"
+    }, {
+      auth: {
+        username: authCred.sandboxCredentials.api,
+        password: authCred.sandboxCredentials.secret,
+      },
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded'
+      }
+    })
+    return await token
+  } catch(ex) {
+    console.log(ex)
+  }
+}
 
 let buildParts = async () => {
   for(let part of statParts){
