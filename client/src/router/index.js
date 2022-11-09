@@ -97,6 +97,11 @@ const router = createRouter({
       name: 'part_detail',
       component: () => import('../views/DetailView.vue'),
       props: true,
+    },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: () => import('../views/CheckoutView.vue'),
     }
   ]
 })

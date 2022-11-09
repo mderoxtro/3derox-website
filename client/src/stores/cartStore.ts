@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { CART_STORAGE } from '../composables/usePersistCart.js';
+import axios from 'axios';
 import { useProductStore } from './productStore.js';
 
 export interface Purchase {
@@ -35,7 +36,20 @@ export const useCartStore = defineStore({
         return acc + this.contents[id].quantity;
       }, 0);
     },
-
+    totalWeight(): number {
+      const products = useProductStore();
+      return Object.keys(this.contents).reduce((acc, id) => {
+        let newId = id
+        if(id.length > 9){
+          if(id.slice(0, 7) == '3DMDKIT'){
+            newId = id.slice(0,10)
+          } else {
+            newId = id.slice(0, 9)
+          }
+        }
+        return acc + products.items[newId].weight * this.contents[id].quantity;
+      }, 0);
+    },
     total(): number {
       const products = useProductStore();
       return Object.keys(this.contents).reduce((acc, id) => {
@@ -43,10 +57,8 @@ export const useCartStore = defineStore({
         if(id.length > 9){
           if(id.slice(0, 7) == '3DMDKIT'){
             newId = id.slice(0,10)
-            console.log(newId)
           } else {
             newId = id.slice(0, 9)
-            console.log(newId)
           }
         }
         return acc + products.items[newId].price * this.contents[id].quantity;
@@ -74,6 +86,7 @@ export const useCartStore = defineStore({
           customId: purchase.newProdId,
           indCost: products.items[purchase.productId].price,
           cost: purchase.quantity * products.items[purchase.productId].price,
+          weight: products.items[purchase.productId].weight
         };
       });
     },
@@ -132,6 +145,6 @@ export const useCartStore = defineStore({
     },
     removeAll() {
       this.contents = {}
-    }
+    },
   },
 });

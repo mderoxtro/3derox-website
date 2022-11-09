@@ -66,6 +66,10 @@ const partsSchema = new mongoose.Schema({
   condFlags: {
     type: Array,
     default: ["None"]
+  },
+  weight: {
+    type: Number,
+    default: 1
   }
 })
 

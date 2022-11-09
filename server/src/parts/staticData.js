@@ -33,7 +33,8 @@ let allParts = [
     {
       desc: "Installation Instructions (PDF)",
       url: "/parts/instructional/door-plastic-install.pdf"
-    }]
+    }],
+    weight: 5,
   },
   {
     photos: [{
@@ -69,7 +70,8 @@ let allParts = [
     {
       desc: "Installation Instructions (PDF)",
       url: "/parts/instructional/door-plastic-install.pdf"
-    }]
+    }],
+    weight: 5
   },
   {
     photos: [{
@@ -105,7 +107,8 @@ let allParts = [
     {
       desc: "Installation Instructions (PDF)",
       url: "/parts/instructional/door-plastic-install.pdf"
-    }]
+    }],
+    weight: 10,
   },
   {
     photos: [{
@@ -141,7 +144,8 @@ let allParts = [
     {
       desc: "Installation Instructions (PDF)",
       url: "/parts/instructional/door-plastic-install.pdf"
-    }]
+    }],
+    weight: 20,
   },
   {
     photos: [{
@@ -177,7 +181,8 @@ let allParts = [
     {
       desc: "Installation Instructions (PDF)",
       url: "/parts/instructional/door-plastic-install.pdf"
-    }]
+    }],
+    weight: 5
   },
   {
     photos: [{
@@ -219,6 +224,7 @@ let allParts = [
       url: "/parts/3dmd00008/20318984-rear-hatch-spacer.pdf",
     },],
     condFlags: ["Color"],
+    weight: 10,
   },
   {
     photos: [{
@@ -256,6 +262,7 @@ let allParts = [
       url: "/parts/3dmd00009/20206202-handle-insert.pdf",
     },],
     condFlags: ["Color"],
+    weight: 10,
   },
   {
     photos: [{
@@ -291,7 +298,8 @@ let allParts = [
     addFiles: [{
       desc: "CAD File (PDF)",
       url: "/parts/3dmd00010/20299262-air-deflector.pdf",
-    },]
+    },],
+    weight: 20,
   },
   {
     photos: [{
@@ -325,6 +333,7 @@ let allParts = [
       url: "/parts/3dmd00011/unknown-strut-dust-cap.pdf",
     },],
     condFlags: ["Color", "Dimension"],
+    weight: 250,
   },
   {
     photos: [{
@@ -360,7 +369,8 @@ let allParts = [
     addFiles: [{
       desc: "CAD File (PDF)",
       url: "/parts/3dmd00012/hatch-pulldown-guide.pdf",
-    },]
+    },],
+    weight: 10,
   },
   {
     photos: [{
@@ -391,6 +401,7 @@ let allParts = [
     storeFronts: [ "eBay", "Etsy", "Amazon", "Facebook"],
     addFiles: ["None"],
     condFlags: ["Color", "Dimension"],
+    weight: 500,
   },
   {
     photos: [{
@@ -433,6 +444,7 @@ let allParts = [
     storeFronts: [ "eBay", "Etsy", "Amazon", "Facebook"],
     addFiles: ["None"],
     condFlags: ["Color"],
+    weight: 5,
   },
   {
     photos: [{
@@ -471,6 +483,7 @@ let allParts = [
     storeFronts: [ "eBay", "Etsy", "Amazon", "Facebook"],
     addFiles: ["None"],
     condFlags: ["Color", "Design"],
+    weight: 5,
   },
   {
     photos: [{
@@ -519,6 +532,7 @@ let allParts = [
           desc: "Installation Instructions (PDF)",
           url: "/parts/instructional/door-plastic-install.pdf"
         }],
+    weight: 400,
   },
 ]
 

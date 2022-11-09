@@ -11,6 +11,7 @@ const statParts = require('./parts/staticData.js')
 const mongoose = require('mongoose')
 const Parts = require('./models/parts.js')
 const authCred = require('./paypal/auth.js')
+const shippoCred = require('./shippo/auth.js')
 
 // PRODUCTION CONNECT
 // mongoose.connect("mongodb://3derox.com:27017/3derox-db")
@@ -46,6 +47,7 @@ let paypalToken = ''
 app.listen(port, async () => {
   console.log(`Running on port ${port}`)
   buildParts()
+  tokenHandler()
   setInterval(() => tokenHandler(), 300000)
 })
 
@@ -58,8 +60,73 @@ app.get("/allParts", async (req, res) => {
   res.send(allParts)
 })
 
+app.post("/calcship", async (req, res) => {
+  try {
+    let calcedShip = await axios.post(shippoCred.sandboxCredentials.url, {
+      address_from: req.body.data.address_from,
+      address_to: req.body.data.address_to,
+      parcels: req.body.data.parcels
+    }, {
+      headers: {
+        'authorization': `ShippoToken ${shippoCred.sandboxCredentials.token}`,
+        'content-type': 'application/json'
+      }
+    })
+    console.log(calcedShip.data)
+    return await calcedShip.data
+  } catch(err) {
+    console.dir(err.response.data.address_to)
+  }
+})
+
+app.post("/checkout/create", async (req, res) => {
+  try {
+    let createdOrder = await axios.post(authCred.sandboxCredentials.orderUrl, {
+      'intent': "CAPTURE",
+      'purchase_units': req.body.data.purchase_units,
+      'application_context': {
+        'brand_name': '3DeRox LLC',
+        'locale': 'en-US',
+        'shipping_preference': 'SET_PROVIDED_ADDRESS'
+      }
+      // 'purchase_units': [
+      //   {
+      //     'items': [
+      //       {
+      //         'name': 'Potato',
+      //         'desc': "Potatos, in a bag.",
+      //         'quantity': '2',
+      //         'unit_amount': {
+      //           'currency_code': 'USD',
+      //           'value': '300'
+      //         }
+      //       }
+      //     ],
+      //     'amount': {
+      //       'currency_code': 'usd',
+      //       'value': '600',
+      //       'breakdown': {
+      //         'item_total': {
+      //           'currency_code': 'USD',
+      //           'value': '600'
+      //         }
+      //       }
+      //     }
+      //   },
+      // ]
+    }, {
+      headers: {
+        'authorization': `bearer ${paypalToken}`,
+        'content-type': 'application/json',
+      }
+    })
+    console.log(createdOrder)
+  } catch(ex) {
+    console.dir(ex.response.data)
+  }
+})
+
 let tokenHandler = async () => {
-  console.log("Handling Token")
   let currentToken = await authPaypal().then((response) => {
     paypalToken = response.data.access_token
   })
@@ -105,6 +172,7 @@ let buildParts = async () => {
         storeFronts: part.storeFronts,
         addFiles: part.addFiles,
         condFlags: part.condFlags,
+        weight: part.weight
       })
       await newPart.save()
     } else {

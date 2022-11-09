@@ -18,8 +18,9 @@
         <p class="tote"><span class="sectitle">Cart Total:</span> {{ toCurrency(cartStore.total) }}</p>
         <p v-if="cartStore.total > 25" class="tote"><span class="sectitle">Free Shipping!</span></p>
         <p v-else class="tote"><span class="sectitle">+ Shipping Cost</span></p>
-        <button class="fancyButton">Checkout</button>
+        <button class="fancyButton" @click="$router.push('/checkout')">Checkout</button>
         <button @click="cartStore.removeAll" class="fancyButton">Empty Cart</button>
+        <p>{{ cartStore.totalWeight }} grams</p>
       </div>
     </div>
   </div>
