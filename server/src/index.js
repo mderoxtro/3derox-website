@@ -72,8 +72,7 @@ app.post("/calcship", async (req, res) => {
         'content-type': 'application/json'
       }
     })
-    console.log(calcedShip.data)
-    return await calcedShip.data
+    res.send(calcedShip.data.rates)
   } catch(err) {
     console.dir(err.response.data.address_to)
   }
