@@ -1,8 +1,8 @@
 <template>
   <div class="complete">
-  <p>No worries!  We are voiding Order ID {{ cartStore.getOrderID }} with Paypal - this should take no longer than 3 hours.</p>
+  <p>No worries!  We are voiding Order ID {{ storeIdTemp }} with Paypal - this should take no longer than 3 hours to update on their end.</p>
   <p>Would you like to empty your cart as well?</p>
-  
+  <button @click="cartStore.removeAll" class="fancyButton">Yeah, dump it.</button>
   </div>
 </template>
 
@@ -35,10 +35,15 @@ import { useCartStore } from '../stores/cartStore';
 const cartStore = useCartStore();
 const formattedCart = computed(() => cartStore.formattedCart);
 
-let test = await axios.post('http://localhost:3000/checkout/cancel', {
-      data: {
-        orderID: cartStore.getOrderID
-      },
-})
+let cancelOrder = async () => {
+  let voidOrder = await axios.post('http://localhost:3000/checkout/cancel', {
+        data: {
+          orderID: cartStore.getOrderID
+        },
+  })
+}
+let storeIdTemp = cartStore.getOrderID
+cancelOrder()
+cartStore.removeOrder()
 
 </script>

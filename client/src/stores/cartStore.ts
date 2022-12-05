@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { CART_STORAGE, ID_STORAGE } from '../composables/usePersistCart.js';
+import { CART_STORAGE, ID_STORAGE, URL_STORAGE } from '../composables/usePersistCart.js';
 import axios from 'axios';
 import { useProductStore } from './productStore.js';
 
@@ -13,6 +13,7 @@ interface CartState {
   contents: Record<string, Purchase>;
   rates: array;
   orderID: string;
+  approveUrl: string;
 }
 
 export interface CartPreview {
@@ -32,6 +33,7 @@ export const useCartStore = defineStore({
     contents: JSON.parse(localStorage.getItem(CART_STORAGE) as string) ?? {},
     rates: [],
     orderID: JSON.parse(localStorage.getItem(ID_STORAGE) as string) ?? {},
+    approveUrl: JSON.parse(localStorage.getItem(URL_STORAGE) as string) ?? {},
   }),
 
   getters: {
@@ -231,6 +233,12 @@ export const useCartStore = defineStore({
     },
     removeAll() {
       this.contents = {}
+    },
+    removeOrder() {
+      console.log("It's getting called...")
+      this.approveUrl = ""
+      this.orderID = ""
+      console.log(this.orderID + " is the id now")
     },
     async calcShip(shipment) {
       let allRates = await axios.post('http://localhost:3000/calcship', {
