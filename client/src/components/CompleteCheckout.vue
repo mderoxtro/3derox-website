@@ -1,18 +1,12 @@
 <template>
     <div class="inCart">
         <div class="detailCol">
-            <h3>
                 <router-link v-if="!cartProduct.isShip" class="link link-hover" :to="`/product/${cartProduct.id}`">{{ cartProduct.title }}</router-link>
-                <p v-else><img :src="cartProduct.image">{{ cartProduct.id }}</p>
-            </h3>
+                <p v-else>Shipping: {{ cartProduct.id }}</p>
             <p>x {{ cartProduct.quantity }} @ {{ toCurrency(cartProduct.indCost) }} each</p>
             <p class="custom">{{cartProduct.custom}}</p>
         </div>
-        <div class="exCol">
-        <button class="fancyQtyButton" @click="cartStore.removeFull(cartProduct.id)">X</button>
-        </div>
     </div>
-    <hr class="divider">
 </template>
 
 <style scoped>
@@ -23,11 +17,6 @@
   display: flex;
   flex-direction: column;
   max-width: 85%;
-}
-.exCol {
-  display: flex;
-  width: 40px;
-  height: 40px;
 }
 .inCart {
   display: flex;

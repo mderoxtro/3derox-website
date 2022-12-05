@@ -46,9 +46,6 @@
   border: 1px solid black;
   margin-right: 10px;
 }
-.fancypic {
-  border-radius: 8px;
-}
 .horilist {
   display: inline;
   padding-right: 40px;

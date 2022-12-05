@@ -1,17 +1,24 @@
 <template>
     <div class="inCart">
         <figure class="p-8">
-        <img
+        
+        <img v-if="!cartProduct.isShip"
             :src="cartProduct.image"
             alt="Card Image"
             width="200"
             height="150"
             class="fancypic"
         />
+        <img v-else
+          src="/shipping.png"
+          width="200"
+          height="150"
+          class="fancypic"
+        />
         </figure> 
-        <div class="card-body">
+        <div class="card-body" v-if="!cartProduct.isShip">
             <h3 class="card-title">
-                <router-link class="link link-hover" :to="`/product/${cartProduct.id}`">{{ cartProduct.title }}</router-link>
+                <router-link v-if="!cartProduct.isShip" class="link link-hover" :to="`/product/${cartProduct.id}`">{{ cartProduct.title }}</router-link>
             </h3>
             <p class="custom">{{cartProduct.custom}}</p>
             <p><span class="sectitle">Quantity Per Car:</span> {{ cartProduct.require }}</p>
@@ -19,13 +26,20 @@
             <div class="card-actions">
                 <div class="btn-group">
                 <span class="sectitle">Cart Quantity:</span> 
-                    <button class="fancyButton" @click="cartStore.remove(cartProduct.id, cartProduct.customId)">-</button>
-                    <span class="qtyBadge">{{ cartProduct.quantity }}</span>
-                    <button class="fancyButton" @click="cartStore.add(cartProduct.id, cartProduct.customId)">+</button>
+                    <button class="fancyQtyButton" @click="cartStore.remove(cartProduct.id, cartProduct.customId)">-</button>
+                    <span class="fancyQtyButton" style="pointer-events: none;">{{ cartProduct.quantity }}</span>
+                    <button class="fancyQtyButton" @click="cartStore.add(cartProduct.id, cartProduct.customId)">+</button>
                 </div>
             </div>
             <p><span class="sectitle">Price Each:</span> {{ toCurrency(cartProduct.indCost) }}</p>
             <p><span class="sectitle">Sub Total:</span> {{ toCurrency(cartProduct.cost) }}</p>
+        </div>
+        <div class="card-body" v-else>
+        <h3>
+          <p>Shipping - {{ cartProduct.id }}</p>
+        </h3>
+        <p><span class="sectitle">Sub Total:</span> {{ toCurrency(cartProduct.cost) }}</p>
+        <button class="fancyButton" @click="cartStore.remove(cartProduct.id, cartProduct.id)">Remove Shipping</button>
         </div>
     </div>
 </template>
@@ -33,9 +47,6 @@
 <style scoped>
 .custom {
   font-size: 10px;
-}
-.fancypic {
-  border-radius: 8px;
 }
 .inCart {
   display: flex;
@@ -53,47 +64,6 @@
   text-align: center;
   background-color: #009dc4;
   border: 2px;
-}
-.fancyButton {
-  appearance: none;
-  background-color: transparent;
-  border: 2px solid #1A1A1A;
-  border-radius: 8px;
-  box-sizing: border-box;
-  color: #3B3B3B;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-size: 16px;
-  font-weight: 600;
-  line-height: normal;
-  margin: 0;
-  min-height: 20px;
-  min-width: 0;
-  outline: none;
-  text-align: center;
-  text-decoration: none;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  will-change: transform;
-}
-
-.fancyButton:disabled {
-  pointer-events: none;
-}
-
-.fancyButton:hover {
-  color: #fff;
-  background-color: #1A1A1A;
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
-}
-
-.fancyButton:active {
-  box-shadow: none;
-  transform: translateY(0);
 }
 </style>
 

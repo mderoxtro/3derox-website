@@ -18,9 +18,6 @@
   .sectitle {
     font-weight: bold;
   }
-  .fancypic {
-    border-radius: 8px;
-  }
   .parts {
     min-height: 50vh;
     display: flex;
