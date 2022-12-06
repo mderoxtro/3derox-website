@@ -32,7 +32,7 @@ cd <template>
     <button @click="cartStore.calcShip(formatShipload())" class="fancyButton" :disabled="checkErrors(errors)">Calculate Shipping</button>
     <div class="shippy">
     <select v-model="rateSelected" class="fancyRate">
-    <option :value="this.rateSelected" disabled selected hidden>Calculate, Then Select Shipment Method</option>
+    <option :value="" disabled selected hidden>Calculate, Then Select Shipment Method</option>
     <option v-for="rate in cartStore.formattedRates" :value="rate">
     <p>{{ toCurrency(rate.amount) }}</p>
     <p>&nbsp;&nbsp;{{ rate.carrier }}</p>
