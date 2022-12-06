@@ -28,6 +28,7 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
+import { buildSettings } from '../buildSettings.js'
 import axios from 'axios';
 import { toCurrency, allStates } from '../util';
 import CheckoutCard from '../components/CompleteCheckout.vue';
@@ -36,7 +37,13 @@ const cartStore = useCartStore();
 const formattedCart = computed(() => cartStore.formattedCart);
 
 let cancelOrder = async () => {
-  let voidOrder = await axios.post('http://localhost:3000/checkout/cancel', {
+  let voidUrl = ""
+  if(buildSettings.isProduction){
+    voidUrl = "http://3derox.com:3000/checkout/cancel"
+  } else {
+    voidUrl = "http://localhost:3000/checkout/cancel"
+  }
+  let voidOrder = await axios.post(voidUrl, {
         data: {
           orderID: cartStore.getOrderID
         },

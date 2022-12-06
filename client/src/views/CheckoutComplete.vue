@@ -39,6 +39,7 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
 import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { buildSettings } from '../buildSettings.js'
 import axios from 'axios';
 import { toCurrency, allStates } from '../util';
 import CheckoutCard from '../components/CompleteCheckout.vue';
@@ -54,15 +55,19 @@ let redirectLink = (url) => {
 
 let approveOrder = async () => {
   try {
-    let approve = await axios.post('http://localhost:3000/checkout/complete', {
+    let approveUrl = ""
+    if(buildSettings.isProduction){
+      approveUrl = "http://3derox.com:3000/checkout/complete"
+    } else {
+      approveUrl = "http://localhost:3000/checkout/complete"
+    }
+    let approve = await axios.post(approveUrl, {
           data: {
             orderID: cartStore.getOrderID
           },
     })
-    console.log("Returning '/checkout/success'")
     router.push('/checkout/success')
   } catch(error) {
-    console.log("Returning '/error'")
     router.push('/error')
   }
 }

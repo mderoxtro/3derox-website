@@ -117,6 +117,7 @@ cd <template>
 <script setup>
 import { computed, reactive, ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
+import { buildSettings } from '../buildSettings.js'
 import formValidation from '../formValidation.js'
 import axios from 'axios';
 import { toCurrency, allStates } from '../util';
@@ -272,7 +273,13 @@ let formatPayload = async () => {
     ]
   }
   try {
-    let test = await axios.post('http://localhost:3000/checkout/create', {
+    let testUrl = ""
+    if(buildSettings.isProduction){
+      testUrl = "http://3derox.com:3000/checkout/create"
+    } else {
+      testUrl = "http://localhost:3000/checkout/create"
+    }
+    let test = await axios.post(testUrl, {
       data: payload,
     })
     if(test.data.details){

@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia';
+import { buildSettings } from '../buildSettings.js'
 
-const storeUrl = 'http://localhost:3000';
+let storeUrl = ""
+if(buildSettings.isProduction){
+  storeUrl = "http://3derox.com:3000"
+} else {
+  storeUrl = "http://localhost:3000"
+}
 
 export interface Product {
   id: number;

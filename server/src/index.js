@@ -9,10 +9,11 @@ const cors = require('cors')
 const axios = require('axios')
 const statParts = require('./parts/staticData.js')
 const mongoose = require('mongoose')
+const buildSettings = require('./buildSettings.js')
 const Parts = require('./models/parts.js')
 const authConfig = require('../../serve_config/config.js')
 
-let serveProduction = false
+let serveProduction = buildSettings.isProduction
 
 if(serveProduction){
   mongoose.connect("mongodb://3derox.com:27017/3derox-db")
@@ -81,7 +82,6 @@ app.post("/checkout/complete", async (req, res) => {
         'content-type': 'application/json',
       }
     })
-    console.log(capturedOrder.data)
     res.sendStatus(200)
   } catch(error) {
     console.error(error.response.data)
@@ -116,7 +116,6 @@ app.post("/checkout/cancel", async (req, res) => {
         'content-type': 'application/json',
       }
     })
-    console.log(voidedOrder.response.data)
   } catch(error) {
     console.error(error.response.data)
   }
@@ -152,16 +151,19 @@ app.post("/calcship", async (req, res) => {
 app.post("/checkout/create", async (req, res) => {
   let paypalToken = ""
   let paypalOrderUrl = ""
+  let returnUrl = ""
   if(serveProduction){
     let url = authConfig.serverConfig.paypalUrlProduction
     let api = authConfig.serverConfig.paypalAPIProduction
     let secret = authConfig.serverConfig.paypalSecretProduction
+    returnUrl = "https://www.3derox.com/checkout/complete"
     paypalOrderUrl = authConfig.serverConfig.paypalOrderProduction
     paypalToken = await authPaypal(url, api, secret)
   } else {
     let url = authConfig.serverConfig.paypalUrlSandbox
     let api = authConfig.serverConfig.paypalAPISandbox
     let secret = authConfig.serverConfig.paypalSecretSandbox
+    returnUrl = "http://localhost:5173/checkout/complete"
     paypalOrderUrl = authConfig.serverConfig.paypalOrderSandbox
     paypalToken = await authPaypal(url, api, secret)
   }
@@ -173,7 +175,7 @@ app.post("/checkout/create", async (req, res) => {
         'brand_name': '3DeRox LLC',
         'locale': 'en-US',
         'shipping_preference': 'SET_PROVIDED_ADDRESS',
-        'return_url':'http://localhost:5173/checkout/complete'
+        'return_url': returnUrl
       }
     }, {
       headers: {

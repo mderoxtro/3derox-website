@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { reactive, watch } from 'vue'
+import { buildSettings } from '../buildSettings.js'
 
 let getAllParts = async () => {
   let allPartsStorage = localStorage.getItem('allParts')
@@ -7,7 +8,13 @@ let getAllParts = async () => {
     let parts = JSON.parse(allPartsStorage)
     return parts
   } else {
-    let parts = await fetch('http://localhost:3000/allParts')
+    let routeUrl = ""
+    if(buildSettings.isProduction){
+      routeUrl = "http://3derox.com:3000/allParts"
+    } else {
+      routeUrl = "http://localhost:3000/allParts"
+    }
+    let parts = await fetch(routeUrl)
     return await parts.json();
   }
 }

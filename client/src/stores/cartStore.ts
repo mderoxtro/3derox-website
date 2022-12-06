@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { buildSettings } from '../buildSettings.js'
 import { CART_STORAGE, ID_STORAGE, URL_STORAGE } from '../composables/usePersistCart.js';
 import axios from 'axios';
 import { useProductStore } from './productStore.js';
@@ -242,7 +243,13 @@ export const useCartStore = defineStore({
       this.orderID = ""
     },
     async calcShip(shipment) {
-      let allRates = await axios.post('http://localhost:3000/calcship', {
+      let routeUrl = ""
+      if(buildSettings.isProduction){
+        routeUrl = "http://3derox.com:3000/calcship"
+      } else {
+        routeUrl = "http://localhost:3000/calcship"
+      }
+      let allRates = await axios.post(routeUrl, {
         data: shipment
       })
       this.rates = allRates.data
