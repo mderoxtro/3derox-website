@@ -171,12 +171,9 @@ let checkErrors = (errors) => {
 }
 
 let checkShipping = (selectedVal) => {
-  console.log(selectedVal)
   if(selectedVal !== "default" && !selectedVal && selectedVal == undefined){
-    console.log("Returning true on check")
     return true 
   } else {
-    console.log("Returning false on check")
     return false
   }
 }
