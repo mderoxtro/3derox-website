@@ -82,6 +82,7 @@ app.post("/checkout/complete", async (req, res) => {
       }
     })
     console.log(capturedOrder.data)
+    res.sendStatus(200)
   } catch(error) {
     console.error(error.response.data)
     if(error.response.data.details.issue == "ORDER_NOT_APPROVED"){

@@ -1,6 +1,6 @@
 <template>
   <div class="complete">
-    <p>On clicking the "Approve & Submit Order" button below, you will be authorizing Paypal to charge the source provided on the previous screen, for the order details listed below.  3DeRox will package and ship the items to the provided address, using the shipment method and speed selected.  If something doesn't look right, or you do not wish to proceed, please click the "Cancel Order" button.  Otherwise, please click "Approve & Submit Order".</p>
+    <p>On clicking the "Approve Payment & Submit Order" button below, you will be authorizing Paypal to charge the source provided on the previous screen, for the order details listed below.  3DeRox will package and ship the items to the provided address, using the shipment method and speed selected.  If something doesn't look right, or you do not wish to proceed, please click the "Cancel Order" button.  If you need to change the payment method on Paypal, or adjust the shipping address, please click "Edit on Paypal".  Otherwise, please click "Approve Payment & Submit Order".</p>
     <p><span class="sectitle">Order ID:</span> {{ cartStore.getOrderID }}</p>
     <div class="cartContents">
     <p><span class="sectitle">Cart Contents:</span>    <CheckoutCard
@@ -11,7 +11,8 @@
 
     <p><span class="sectitle">Total:</span> {{ toCurrency(cartStore.total) }}</p>
     </div>
-    <button class="fancyButton">Approve & Submit Order</button>
+    <button class="fancyButton" @click="approveOrder()">Approve Payment & Submit Order</button>
+    <button class="fancyButton" @click="redirectLink(cartStore.approveUrl)">Edit on Paypal</button>
     <button class="fancyButton" @click="$router.push('/checkout/cancel')">Cancel Order</button>
   </div>
 </template>
@@ -37,7 +38,7 @@
 
 <script setup>
 import { computed, reactive, ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import axios from 'axios';
 import { toCurrency, allStates } from '../util';
 import CheckoutCard from '../components/CompleteCheckout.vue';
@@ -45,10 +46,27 @@ import { useCartStore } from '../stores/cartStore';
 const cartStore = useCartStore();
 const formattedCart = computed(() => cartStore.formattedCart);
 
-// let test = await axios.post('http://localhost:3000/checkout/complete', {
-//       data: {
-//         orderID: cartStore.getOrderID
-//       },
-// })
+const router = useRouter()
+
+let redirectLink = (url) => {
+  window.location = url
+}
+
+let approveOrder = async () => {
+  try {
+    let approve = await axios.post('http://localhost:3000/checkout/complete', {
+          data: {
+            orderID: cartStore.getOrderID
+          },
+    })
+    console.log("Returning '/checkout/success'")
+    router.push('/checkout/success')
+  } catch(error) {
+    console.log("Returning '/error'")
+    router.push('/error')
+  }
+}
+
+
 
 </script>

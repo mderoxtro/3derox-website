@@ -164,6 +164,9 @@ export const useCartStore = defineStore({
     addOrderID(order: string){
       this.orderID = order
     },
+    addApproveUrl(url: string){
+      this.approveUrl = url
+    },
     addShip(isShip: boolean, rate: object){
       if(this.contents[rate.desc]){
         return
@@ -235,10 +238,8 @@ export const useCartStore = defineStore({
       this.contents = {}
     },
     removeOrder() {
-      console.log("It's getting called...")
       this.approveUrl = ""
       this.orderID = ""
-      console.log(this.orderID + " is the id now")
     },
     async calcShip(shipment) {
       let allRates = await axios.post('http://localhost:3000/calcship', {
