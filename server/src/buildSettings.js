@@ -1,5 +1,5 @@
 let buildSettings = {
-  isProduction: true
+  isProduction: false
 }
 
 module.exports = buildSettings

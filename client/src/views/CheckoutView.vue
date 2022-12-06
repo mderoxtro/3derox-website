@@ -31,8 +31,8 @@ cd <template>
     <div v-if="cartStore.total < 25 && !cartStore.hasShipping" class="shipping">
     <button @click="cartStore.calcShip(formatShipload())" class="fancyButton" :disabled="checkErrors(errors)">Calculate Shipping</button>
     <div class="shippy">
-    <select v-model="rateSelected" class="fancyRate">
-    <option :value="" disabled selected hidden>Calculate, Then Select Shipment Method</option>
+    <select v-model="rateSelected" class="fancyRate" @change="checkShipping(rateSelected)">
+    <option value="default" selected hidden disabled>Testicle.</option>
     <option v-for="rate in cartStore.formattedRates" :value="rate">
     <p>{{ toCurrency(rate.amount) }}</p>
     <p>&nbsp;&nbsp;{{ rate.carrier }}</p>
@@ -40,7 +40,7 @@ cd <template>
     <p>&nbsp;&nbsp;Estimated Days to Delivery: {{ rate.est_days }}</p>
     </option>
     </select>
-    <button class="fancyButton" @click="cartStore.addShip(true, rateSelected)">Add Selected Shipment Method</button>
+    <button class="fancyButton" @click="cartStore.addShip(true, rateSelected)" :disabled="checkShipping(rateSelected)">Add Selected Shipment Method</button>
     </div>
     </div>
     <div v-else-if="cartStore.hasShipping || cartStore.total >= 25" class="payment">
@@ -126,8 +126,7 @@ import { useCartStore } from '../stores/cartStore';
 const cartStore = useCartStore();
 const formattedCart = computed(() => cartStore.formattedCart);
 
-const rateSelect = ref('rateSelected')
-const rateSelected = rateSelect.value
+
 const submitButton = ref('submitButton')
 
 
@@ -141,14 +140,11 @@ const props = defineProps({
   state: String,
   zip: String,
   approveLink: String,
+  rateSelected: String,
 })
 defineEmits([
-  'update:firstName', 'update:lastName', 'update:email', 'update:addOne', 'update:addTwo', 'update:city', 'update:state', 'update:zip'
+  'update:firstName', 'update:lastName', 'update:email', 'update:addOne', 'update:addTwo', 'update:city', 'update:state', 'update:zip', 'update:rateSelected'
 ])
-
-let submissionError = computed(() => {
-  console.log(checkErrors())
-})
 
 let input = ref("")
 const { validateFirstNameField, validateSecondNameField, validateEmailField, validateAddress, validateCity, validateState, validateZip, errors } = formValidation()
@@ -170,6 +166,17 @@ let checkErrors = (errors) => {
   if(errors.firstName !== "" || errors.secondName !== "" || errors.email !== "" || errors.address !== "" || errors.city !== "" || errors.state !== "" || errors.zip !== ""){
     return true
   } else {
+    return false
+  }
+}
+
+let checkShipping = (selectedVal) => {
+  console.log(selectedVal)
+  if(selectedVal !== "default" && !selectedVal && selectedVal == undefined){
+    console.log("Returning true on check")
+    return true 
+  } else {
+    console.log("Returning false on check")
     return false
   }
 }
