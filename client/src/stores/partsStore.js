@@ -15,6 +15,7 @@ let getAllParts = async () => {
       routeUrl = "http://localhost:3000/allParts"
     }
     let parts = await fetch(routeUrl)
+    console.log(parts)
     return await parts.json();
   }
 }
