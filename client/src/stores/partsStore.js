@@ -10,7 +10,7 @@ let getAllParts = async () => {
   } else {
     let routeUrl = ""
     if(buildSettings.isProduction){
-      routeUrl = "http://3derox.com:3000/allParts"
+      routeUrl = "https://3derox.com:3000/allParts"
     } else {
       routeUrl = "http://localhost:3000/allParts"
     }

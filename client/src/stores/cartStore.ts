@@ -245,7 +245,7 @@ export const useCartStore = defineStore({
     async calcShip(shipment) {
       let routeUrl = ""
       if(buildSettings.isProduction){
-        routeUrl = "http://3derox.com:3000/calcship"
+        routeUrl = "https://3derox.com:3000/calcship"
       } else {
         routeUrl = "http://localhost:3000/calcship"
       }

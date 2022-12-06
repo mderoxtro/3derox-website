@@ -39,7 +39,7 @@ const formattedCart = computed(() => cartStore.formattedCart);
 let cancelOrder = async () => {
   let voidUrl = ""
   if(buildSettings.isProduction){
-    voidUrl = "http://3derox.com:3000/checkout/cancel"
+    voidUrl = "https://3derox.com:3000/checkout/cancel"
   } else {
     voidUrl = "http://localhost:3000/checkout/cancel"
   }

@@ -57,7 +57,7 @@ let approveOrder = async () => {
   try {
     let approveUrl = ""
     if(buildSettings.isProduction){
-      approveUrl = "http://3derox.com:3000/checkout/complete"
+      approveUrl = "https://3derox.com:3000/checkout/complete"
     } else {
       approveUrl = "http://localhost:3000/checkout/complete"
     }

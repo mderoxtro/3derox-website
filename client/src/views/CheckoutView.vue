@@ -275,7 +275,7 @@ let formatPayload = async () => {
   try {
     let testUrl = ""
     if(buildSettings.isProduction){
-      testUrl = "http://3derox.com:3000/checkout/create"
+      testUrl = "https://3derox.com:3000/checkout/create"
     } else {
       testUrl = "http://localhost:3000/checkout/create"
     }
